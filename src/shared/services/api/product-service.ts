@@ -4,7 +4,8 @@ const urlBase = process.env.API_BASE_URL!;
 
 async function create(product: Product): Promise<Product | undefined> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/products`, {
       body: JSON.stringify(product),
       method: "POST",
@@ -22,7 +23,8 @@ async function create(product: Product): Promise<Product | undefined> {
 
 async function update(newProduct: Product): Promise<Product | undefined> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/products`, {
       body: JSON.stringify(newProduct),
       method: "PUT",
@@ -40,7 +42,8 @@ async function update(newProduct: Product): Promise<Product | undefined> {
 
 async function getAll() {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/products`, {
       method: "GET",
       headers: {
@@ -58,7 +61,8 @@ async function getAll() {
 
 async function getById(id: string): Promise<Product | undefined> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/products/${id}`, {
       method: "GET",
       headers: {
@@ -76,7 +80,8 @@ async function getById(id: string): Promise<Product | undefined> {
 
 async function getByStockId(id: string): Promise<Product[]> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/products/stock/${id}`, {
       method: "GET",
       headers: {
@@ -95,7 +100,8 @@ async function getByStockId(id: string): Promise<Product[]> {
 
 async function getByCategoryId(id: string): Promise<Product[]> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/products/category/${id}`, {
       method: "GET",
       headers: {

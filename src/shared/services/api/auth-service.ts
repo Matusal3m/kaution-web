@@ -23,6 +23,8 @@ async function login({
 
     const { token } = await response.json();
 
+    localStorage.setItem("jwt", token);
+
     return token;
   } catch (error) {
     console.log({ error });
@@ -52,6 +54,8 @@ async function register({
     });
 
     const { token } = await response.json();
+
+    localStorage.setItem("jwt", token);
 
     return token;
   } catch (error) {

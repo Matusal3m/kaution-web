@@ -17,7 +17,7 @@ const translateTypeToPortuguese = (type: string) => {
     case "products":
       return "Produtos";
     default:
-      return "";
+      return type;
   }
 };
 

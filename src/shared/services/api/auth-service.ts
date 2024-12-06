@@ -1,5 +1,3 @@
-"use client"
-
 const urlBase = "https://stock-api-rsj9.onrender.com";
 
 type Token = string;

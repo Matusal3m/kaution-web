@@ -1,6 +1,9 @@
+"use client"
+
 import { Stock } from "@/shared/types";
 import { categoryColumns } from "@/components/columns/categories-columns";
 import { DataTable } from "@/components/ui/data-table";
+import { useStorage } from "@/contexts/storeage";
 
 async function getData(): Promise<Stock[]> {
   return [
@@ -23,12 +26,13 @@ async function getData(): Promise<Stock[]> {
   ];
 }
 
-export default async function StocksDashboard() {
-  const data = await getData();
+export default function StocksDashboard() {
+  // const data = await getData();
+  const {stocks} = useStorage();
 
   return (
     <div className="flex-col container mx-auto">
-      <DataTable columns={categoryColumns} data={data} />
+      <DataTable columns={categoryColumns} data={stocks} />
     </div>
   );
 }

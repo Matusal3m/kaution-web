@@ -1,5 +1,3 @@
-"use client"
-
 import { Category } from "../../types";
 
 const urlBase = "https://stock-api-rsj9.onrender.com";
@@ -8,6 +6,8 @@ async function create(category: Category): Promise<Category | undefined> {
   try {
     const JWT = localStorage.getItem("jwt")!;
     
+    console.log({JWT})
+
     const response = await fetch(`${urlBase}/categories`, {
       body: JSON.stringify(category),
       method: "POST",

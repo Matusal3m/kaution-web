@@ -1,5 +1,3 @@
-"use client"
-
 import { Stock } from "@/shared/types";
 
 const urlBase = "https://stock-api-rsj9.onrender.com";

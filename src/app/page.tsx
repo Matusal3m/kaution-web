@@ -1,5 +1,5 @@
 export default function Home() {
   return (
-    <div>Hello world!</div>
+    <div>Página princial ainda não implementada</div>
   );
 }

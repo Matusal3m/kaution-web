@@ -1,3 +1,5 @@
+"use client"
+
 import * as authService from "./auth-service";
 import * as categoryService from "./category-service";
 import * as productService from "./product-service";

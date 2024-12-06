@@ -1,6 +1,8 @@
+"use client"
+
 import { Product } from "../../types";
 
-const urlBase = process.env.API_BASE_URL!;
+const urlBase = "https://stock-api-rsj9.onrender.com";
 
 async function create(product: Product): Promise<Product | undefined> {
   try {

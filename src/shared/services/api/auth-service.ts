@@ -1,7 +1,9 @@
-const urlBase = process.env.API_BASE_URL!;
+"use client"
+
+const urlBase = "https://stock-api-rsj9.onrender.com";
 
 type Token = string;
-
+console.log({urlBase})
 async function login({
   email,
   password,
@@ -10,6 +12,7 @@ async function login({
   password: string;
 }): Promise<Token | undefined> {
   try {
+    console.log("Enviando dados de login...")
     const response = await fetch(`${urlBase}/auth/login`, {
       body: JSON.stringify({
         email,
@@ -22,6 +25,8 @@ async function login({
     });
 
     const { token } = await response.json();
+
+    console.log({token})
 
     localStorage.setItem("jwt", token);
 

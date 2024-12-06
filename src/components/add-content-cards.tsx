@@ -45,11 +45,11 @@ const cards: CreateCardProps[] = [
   },
 ];
 
-export function AddContentCard() {
+export function AddContentCard({cards}: {cards: CreateCardProps[]}) {
   return (
     <div className="flex w-full gap-4 justify-between my-4">
       {cards.map((card) => (
-        <Card key={card.title} >
+        <Card key={card.title} className="flex-col justify-between">
           <CardHeader>
             <CardTitle>{card.title}</CardTitle>
           </CardHeader>

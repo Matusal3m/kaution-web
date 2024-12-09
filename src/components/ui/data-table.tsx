@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border mx-auto">
+    <div className="rounded-md border w-full">
       {!microTable && (
         <div className="flex items-center py-4 justify-evenly px-4">
           <Input

@@ -27,9 +27,5 @@ async function getData(): Promise<InformationAboutUserStock[]> {
 export default async function DashboardHome() {
   const data = await getData();
 
-  return (
-    <div className="flex-col container mx-auto">
-      <DataTable columns={homeColumns} data={data} microTable />
-    </div>
-  );
+  return <DataTable columns={homeColumns} data={data} microTable />;
 }

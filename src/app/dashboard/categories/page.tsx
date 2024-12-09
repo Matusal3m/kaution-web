@@ -27,8 +27,6 @@ export default async function CategoriesDashboard() {
   const data = await getData();
 
   return (
-    <div className="flex-col container mx-auto">
       <DataTable columns={categoryColumns} data={data} />
-    </div>
   );
 }

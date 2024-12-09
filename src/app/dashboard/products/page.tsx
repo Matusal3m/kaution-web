@@ -136,9 +136,5 @@ async function getData(): Promise<Product[]> {
 export default async function ProductsDashboard() {
   const data = await getData();
 
-  return (
-    <div className="flex-col container mx-auto">
-      <DataTable columns={productColumns} data={data} />
-    </div>
-  );
+  return <DataTable columns={productColumns} data={data} />;
 }

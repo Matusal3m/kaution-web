@@ -1,10 +1,11 @@
 import { Stock } from "@/shared/types";
 
-const urlBase = process.env.API_BASE_URL!;
+const urlBase = "https://stock-api-rsj9.onrender.com";
 
 async function create(stock: Stock): Promise<Stock | undefined> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/stocks`, {
       body: JSON.stringify(stock),
       method: "POST",
@@ -22,7 +23,8 @@ async function create(stock: Stock): Promise<Stock | undefined> {
 
 async function update(newStock: Promise<Stock | undefined>) {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/stocks`, {
       body: JSON.stringify(newStock),
       method: "PUT",
@@ -40,7 +42,8 @@ async function update(newStock: Promise<Stock | undefined>) {
 
 async function getAll(): Promise<Stock[]> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/stocks`, {
       method: "GET",
       headers: {
@@ -59,7 +62,8 @@ async function getAll(): Promise<Stock[]> {
 
 async function getById(id: string): Promise<Stock | undefined> {
   try {
-    const JWT = "";
+    const JWT = localStorage.getItem("jwt")!;
+    
     const response = await fetch(`${urlBase}/stocks/${id}`, {
       method: "GET",
       headers: {

@@ -1,3 +1,5 @@
+"use client";
+
 import { Stock } from "@/shared/types";
 import { categoryColumns } from "@/components/columns/categories-columns";
 import { DataTable } from "@/components/ui/data-table";
@@ -26,8 +28,5 @@ async function getData(): Promise<Stock[]> {
 export default async function StocksDashboard() {
   const data = await getData();
 
-  return (
-
-      <DataTable columns={categoryColumns} data={data} />
-  );
+  return <DataTable columns={categoryColumns} data={data} />;
 }

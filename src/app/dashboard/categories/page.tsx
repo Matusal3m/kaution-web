@@ -1,6 +1,9 @@
+"use client";
+
 import { Category } from "@/shared/types";
 import { categoryColumns } from "@/components/columns/categories-columns";
 import { DataTable } from "@/components/ui/data-table";
+import { useStorage } from "@/contexts/storeage";
 
 async function getData(): Promise<Category[]> {
   return [
@@ -25,8 +28,7 @@ async function getData(): Promise<Category[]> {
 
 export default async function CategoriesDashboard() {
   const data = await getData();
+  // const {categories} = useStorage();
 
-  return (
-      <DataTable columns={categoryColumns} data={data} />
-  );
+  return <DataTable columns={categoryColumns} data={data} />;
 }

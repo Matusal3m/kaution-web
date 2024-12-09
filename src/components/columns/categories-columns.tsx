@@ -32,6 +32,7 @@ export const categoryColumns: ColumnDef<Category>[] = [
   },
   {
     id: "actions",
+    header: ({header}) => <div>Ações</div>,
     cell: ({ row }) => {
       const category = row.original;
       const productInformations = `Categoria: ${category.name}`;

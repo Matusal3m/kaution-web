@@ -1,6 +1,9 @@
+"use client";
+
 import { Product } from "@/shared/types";
 import { productColumns } from "@/components/columns/product-columns";
 import { DataTable } from "@/components/ui/data-table";
+import { useStorage } from "@/contexts/storeage";
 
 async function getData(): Promise<Product[]> {
   return [
@@ -133,8 +136,8 @@ async function getData(): Promise<Product[]> {
   ];
 }
 
-export default async function ProductsDashboard() {
-  const data = await getData();
+export default function ProductsDashboard() {
+  const { products } = useStorage();
 
-  return <DataTable columns={productColumns} data={data} />;
+  return <DataTable columns={productColumns} data={products} />;
 }

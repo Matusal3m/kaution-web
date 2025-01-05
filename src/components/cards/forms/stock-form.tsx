@@ -24,10 +24,9 @@ const formSchema = z.object({
 
 interface StockFormProps {
   onSucess: () => void;
-  onLoading: () => void;
 }
 
-export function StockForm({ onSucess, onLoading }: StockFormProps) {
+export function StockForm({ onSucess }: StockFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,10 +36,6 @@ export function StockForm({ onSucess, onLoading }: StockFormProps) {
 
   async function onSubmit({ name }: z.infer<typeof formSchema>) {
     await create({ name });
-  }
-
-  if (form.formState.isLoading) {
-    onLoading();
   }
 
   if (form.formState.isSubmitSuccessful) {

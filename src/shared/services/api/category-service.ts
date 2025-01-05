@@ -1,14 +1,15 @@
 import { Category } from "../../types";
 
-const urlBase = "https://stock-api-rsj9.onrender.com";
+const baseUrl = process.env.BASE_API_URL;
 
-async function create(category: Category): Promise<Category | undefined> {
+async function create(category: {
+  name: string;
+  stockId: number;
+}): Promise<Category | undefined> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    console.log({JWT})
 
-    const response = await fetch(`${urlBase}/categories`, {
+    const response = await fetch(`${baseUrl}/categories`, {
       body: JSON.stringify(category),
       method: "POST",
       headers: {
@@ -26,8 +27,8 @@ async function create(category: Category): Promise<Category | undefined> {
 async function update(newCategory: Category): Promise<Category | undefined> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/categories`, {
+
+    const response = await fetch(`${baseUrl}/categories`, {
       body: JSON.stringify(newCategory),
       method: "PUT",
       headers: {
@@ -42,11 +43,11 @@ async function update(newCategory: Category): Promise<Category | undefined> {
   }
 }
 
-async function getAll(): Promise<Category[]> {
+async function all(): Promise<Category[]> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/categories`, {
+
+    const response = await fetch(`${baseUrl}/categories`, {
       method: "GET",
       headers: {
         authorization: JWT,
@@ -65,8 +66,8 @@ async function getAll(): Promise<Category[]> {
 async function getById(id: string) {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/categories/${id}`, {
+
+    const response = await fetch(`${baseUrl}/categories/${id}`, {
       method: "GET",
       headers: {
         authorization: JWT,
@@ -84,8 +85,8 @@ async function getById(id: string) {
 async function getByStockId(id: string): Promise<Category[]> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/categories/stock/${id}`, {
+
+    const response = await fetch(`${baseUrl}/categories/stock/${id}`, {
       method: "GET",
       headers: {
         authorization: JWT,
@@ -101,4 +102,4 @@ async function getByStockId(id: string): Promise<Category[]> {
   }
 }
 
-export { create, update, getAll, getById, getByStockId };
+export { create, update, all, getById, getByStockId };

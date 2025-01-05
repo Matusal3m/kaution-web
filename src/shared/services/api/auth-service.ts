@@ -1,7 +1,7 @@
-const urlBase = "https://stock-api-rsj9.onrender.com";
+const baseUrl = process.env.BASE_API_URL;
 
 type Token = string;
-console.log({urlBase})
+console.log({ baseUrl });
 async function login({
   email,
   password,
@@ -10,8 +10,8 @@ async function login({
   password: string;
 }): Promise<Token | undefined> {
   try {
-    console.log("Enviando dados de login...")
-    const response = await fetch(`${urlBase}/auth/login`, {
+    console.log("Enviando dados de login...");
+    const response = await fetch(`${baseUrl}/auth/login`, {
       body: JSON.stringify({
         email,
         password,
@@ -24,7 +24,7 @@ async function login({
 
     const { token } = await response.json();
 
-    console.log({token})
+    console.log({ token });
 
     localStorage.setItem("jwt", token);
 
@@ -45,7 +45,7 @@ async function register({
   password: string;
 }): Promise<Token | undefined> {
   try {
-    const response = await fetch(`${urlBase}/auth/register`, {
+    const response = await fetch(`${baseUrl}/auth/register`, {
       body: JSON.stringify({
         email,
         password,
@@ -71,7 +71,7 @@ async function register({
 // Solicitar troca -> mandar token de autenticação para a troca OU código de verificação -> enviar senha nova
 async function changePassword(code: number): Promise<void> {
   try {
-    const response = await fetch(`${urlBase}/auth/verify-confirmation-code`, {
+    const response = await fetch(`${baseUrl}/auth/verify-confirmation-code`, {
       body: JSON.stringify({
         code,
       }),
@@ -88,7 +88,7 @@ async function changePassword(code: number): Promise<void> {
 
 async function sendConfirmationCode(email: string): Promise<void> {
   try {
-    const response = await fetch(`${urlBase}/auth/confirmation-code`, {
+    const response = await fetch(`${baseUrl}/auth/confirmation-code`, {
       body: JSON.stringify({
         email,
       }),
@@ -105,7 +105,7 @@ async function sendConfirmationCode(email: string): Promise<void> {
 
 async function verifyConfirmationCode(code: number): Promise<void> {
   try {
-    const response = await fetch(`${urlBase}/auth/verify-confirmation-code`, {
+    const response = await fetch(`${baseUrl}/auth/verify-confirmation-code`, {
       body: JSON.stringify({
         code,
       }),

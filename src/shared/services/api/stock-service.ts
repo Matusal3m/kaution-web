@@ -1,13 +1,13 @@
 import { Stock } from "@/shared/types";
 
-const urlBase = "https://stock-api-rsj9.onrender.com";
+const baseUrl = process.env.BASE_API_URL;
 
-async function create(stock: Stock): Promise<Stock | undefined> {
+async function create({ name }: { name: string }): Promise<Stock | undefined> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/stocks`, {
-      body: JSON.stringify(stock),
+
+    const response = await fetch(`${baseUrl}/stocks`, {
+      body: JSON.stringify({ name }),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,8 +24,8 @@ async function create(stock: Stock): Promise<Stock | undefined> {
 async function update(newStock: Promise<Stock | undefined>) {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/stocks`, {
+
+    const response = await fetch(`${baseUrl}/stocks`, {
       body: JSON.stringify(newStock),
       method: "PUT",
       headers: {
@@ -40,11 +40,11 @@ async function update(newStock: Promise<Stock | undefined>) {
   }
 }
 
-async function getAll(): Promise<Stock[]> {
+async function all(): Promise<Stock[]> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/stocks`, {
+
+    const response = await fetch(`${baseUrl}/stocks`, {
       method: "GET",
       headers: {
         authorization: JWT,
@@ -56,15 +56,15 @@ async function getAll(): Promise<Stock[]> {
     return json;
   } catch (error) {
     console.log({ error });
-    return []
+    return [];
   }
 }
 
 async function getById(id: string): Promise<Stock | undefined> {
   try {
     const JWT = localStorage.getItem("jwt")!;
-    
-    const response = await fetch(`${urlBase}/stocks/${id}`, {
+
+    const response = await fetch(`${baseUrl}/stocks/${id}`, {
       method: "GET",
       headers: {
         authorization: JWT,
@@ -79,4 +79,4 @@ async function getById(id: string): Promise<Stock | undefined> {
   }
 }
 
-export { create, update, getAll, getById };
+export { create, update, all, getById };

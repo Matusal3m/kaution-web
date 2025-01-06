@@ -99,7 +99,7 @@ interface ProductFormProps {
   onSucess: () => void;
 }
 
-export default function ProductForm({ onSucess }: ProductFormProps) {
+export function ProductForm({ onSucess }: ProductFormProps) {
   const [selectGroups, setSelectGroups] = useState<JSX.Element[]>([]);
 
   useEffect(() => {

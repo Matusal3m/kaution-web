@@ -31,9 +31,6 @@ export function StockDialog() {
           <DialogTitle>Criar estoque</DialogTitle>
           <StockForm onSucess={closeDialog} />
         </DialogHeader>
-        <DialogFooter>
-          <Button>Criar</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -46,9 +46,6 @@ export function CategoryDialog() {
           <DialogTitle>Criar estoque</DialogTitle>
         </DialogHeader>
         <CategoryForm onSucess={closeDialog} />
-        <DialogFooter>
-          <Button>Criar</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

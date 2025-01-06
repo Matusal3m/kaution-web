@@ -28,9 +28,6 @@ export function ProductDialog() {
           <DialogTitle>Criar Produto</DialogTitle>
         </DialogHeader>
         <ProductForm onSucess={closeDialog} />
-        <DialogFooter>
-          <Button type="submit">Criar</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

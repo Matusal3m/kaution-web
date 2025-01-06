@@ -2,7 +2,13 @@ import { Product } from "../../types";
 
 const baseUrl = process.env.BASE_API_URL;
 
-async function create(product: Product): Promise<Product | undefined> {
+async function create(product: {
+  name: string;
+  quantity: number;
+  description: string;
+  categoryId: number;
+  stockId: number;
+}): Promise<Product | undefined> {
   try {
     const JWT = localStorage.getItem("jwt")!;
 

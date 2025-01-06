@@ -1,6 +1,34 @@
 const baseUrl = process.env.BASE_API_URL;
 
-async function getProducts() {
+export type ProductDashboardResponse = Array<{
+  id: number;
+  name: string;
+  description: string;
+  stock: string;
+  category: string;
+}>;
+
+export type CategoryDashboardResponse = Array<{
+  category: {
+    id: number;
+    name: string;
+  };
+  stock: {
+    id: number;
+    name: string;
+  };
+  productsCount: number;
+}>;
+
+export type StockDashboardResponse = Array<{
+  id: number;
+  name: string;
+  stock: string;
+  productsCount: number;
+  categoriesCount: number;
+}>;
+
+async function getProducts(): Promise<ProductDashboardResponse> {
   try {
     const JWT = localStorage.getItem("jwt")!;
 
@@ -15,10 +43,11 @@ async function getProducts() {
     return await response.json();
   } catch (error) {
     console.log({ error });
+    return [];
   }
 }
 
-async function getCategories() {
+async function getCategories(): Promise<CategoryDashboardResponse> {
   try {
     const JWT = localStorage.getItem("jwt")!;
 
@@ -33,10 +62,11 @@ async function getCategories() {
     return await response.json();
   } catch (error) {
     console.log({ error });
+    return [];
   }
 }
 
-async function getStocks() {
+async function getStocks(): Promise<StockDashboardResponse> {
   try {
     const JWT = localStorage.getItem("jwt")!;
 
@@ -51,6 +81,7 @@ async function getStocks() {
     return await response.json();
   } catch (error) {
     console.log({ error });
+    return [];
   }
 }
 

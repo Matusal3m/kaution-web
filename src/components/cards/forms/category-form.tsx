@@ -28,7 +28,7 @@ const formSchema = z.object({
   name: z
     .string()
     .min(2, { message: "O nome deve ter no mínimo duas caractéries" })
-    .max(50, { message: "o nome não deve ultrapassar 5 caractéries" }),
+    .max(50, { message: "O nome não deve ultrapassar 50 caractéries" }),
   stockId: z.number({ required_error: "É preciso escolher um estoque" }),
 });
 

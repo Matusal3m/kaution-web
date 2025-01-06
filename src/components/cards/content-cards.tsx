@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/card";
 import { StockDialog } from "./dialogs/stock-dialog";
 import { CategoryDialog } from "./dialogs/category-dialog";
+import { ProductDialog } from "./dialogs/product-dialog";
 
 interface CardProps {
   title: string;
   content: string;
   key: "stock-card" | "category-card" | "product-card";
-  dialog?: JSX.Element;
+  dialog: JSX.Element;
 }
 
 const cards: CardProps[] = [
@@ -34,6 +35,7 @@ const cards: CardProps[] = [
     title: "Produto",
     content: "Registre as informações de um item no seu estoque",
     key: "product-card",
+    dialog: <ProductDialog />,
   },
 ];
 

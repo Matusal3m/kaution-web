@@ -7,14 +7,14 @@ async function create(category: {
   stockId: number;
 }): Promise<Category | undefined> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories`, {
       body: JSON.stringify(category),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -26,14 +26,14 @@ async function create(category: {
 
 async function update(newCategory: Category): Promise<Category | undefined> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories`, {
       body: JSON.stringify(newCategory),
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -45,12 +45,12 @@ async function update(newCategory: Category): Promise<Category | undefined> {
 
 async function all(): Promise<Category[]> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -65,12 +65,12 @@ async function all(): Promise<Category[]> {
 
 async function getById(id: string) {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories/${id}`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -84,12 +84,12 @@ async function getById(id: string) {
 
 async function getByStockId(id: string): Promise<Category[]> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories/stock/${id}`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 

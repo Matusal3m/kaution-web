@@ -4,15 +4,14 @@ export type ProductDashboardResponse = Array<{
   id: number;
   name: string;
   description: string;
+  quantity: number;
   stock: string;
   category: string;
 }>;
 
 export type CategoryDashboardResponse = Array<{
-  category: {
-    id: number;
-    name: string;
-  };
+  id: number;
+  name: string;
   stock: {
     id: number;
     name: string;
@@ -30,13 +29,13 @@ export type StockDashboardResponse = Array<{
 
 async function getProducts(): Promise<ProductDashboardResponse> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/dashboard/products`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -49,13 +48,13 @@ async function getProducts(): Promise<ProductDashboardResponse> {
 
 async function getCategories(): Promise<CategoryDashboardResponse> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/dashboard/categories`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -68,13 +67,13 @@ async function getCategories(): Promise<CategoryDashboardResponse> {
 
 async function getStocks(): Promise<StockDashboardResponse> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/dashboard/stocks`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 

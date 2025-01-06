@@ -1,6 +1,5 @@
 "use client";
 
-import { Product } from "@/shared/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
@@ -32,7 +31,7 @@ const validateValueChange = (
   setChangingValue(newValue);
 };
 
-// Essa verificação da chamada precisa ser refeita, 
+// Essa verificação da chamada precisa ser refeita,
 // o estado do React não é sincrono, logo o valor aqui acaba sendo o anterior.
 // Isso precisa de correção para implemenar essa funcionalidade
 
@@ -45,17 +44,24 @@ const handeCellBlur = async (
   const newValue = parseInt(event.target.value);
 
   // Descomentar quando o estado for consertado
-  
+
   // if (newValue === parseInt(previousDenifitiveValue as string)) {
   //   console.log("Valores iguais, requisão não é necessária");
   //   return;
   // }
-  
+
   setDefinitiveValue(newValue);
   console.log("Requisão ao banco...");
 };
 
-export const productColumns: ColumnDef<Product>[] = [
+export const productColumns: ColumnDef<{
+  id: number;
+  name: string;
+  description: string;
+  quantity: number;
+  category: string;
+  stock: string;
+}>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -108,6 +114,34 @@ export const productColumns: ColumnDef<Product>[] = [
           value={cellValue as string}
           className="w-12 text-center bg-transparent"
         />
+      );
+    },
+  },
+  {
+    accessorKey: "category",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Categoria
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "stock",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Estoque
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
       );
     },
   },

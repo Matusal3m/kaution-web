@@ -1,32 +1,9 @@
-"use client";
-
-import { Stock } from "@/shared/types";
-import { categoryColumns } from "@/components/columns/categories-columns";
+import { stockColumns } from "@/components/columns/stock-columns";
 import { DataTable } from "@/components/ui/data-table";
-
-async function getData(): Promise<Stock[]> {
-  return [
-    {
-      id: "atBrRwc2",
-      name: "Escola",
-    },
-    {
-      id: "n2B6Rwc2",
-      name: "Casa",
-    },
-    {
-      id: "pqtTrRdF2",
-      name: "Comércio",
-    },
-    {
-      id: "atBrRwc2",
-      name: "Garagem",
-    },
-  ];
-}
+import { getStocks } from "@/shared/services/api/dashboard-service";
 
 export default async function StocksDashboard() {
-  const data = await getData();
+  const data = await getStocks();
 
-  return <DataTable columns={categoryColumns} data={data} />;
+  return <DataTable columns={stockColumns} data={data} />;
 }

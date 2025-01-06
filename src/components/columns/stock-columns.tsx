@@ -15,7 +15,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import React from "react";
 
-export const categoryColumns: ColumnDef<Stock>[] = [
+type stockCollumDef = {
+  id: number;
+  name: string;
+  productsCount: number;
+  categoriesCount: number;
+};
+
+export const stockColumns: ColumnDef<stockCollumDef>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -25,6 +32,34 @@ export const categoryColumns: ColumnDef<Stock>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Nome
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "categoriesCount",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Quantidade de categorias
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "productsCount",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Quantidade de produtos
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

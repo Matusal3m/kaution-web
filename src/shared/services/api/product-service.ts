@@ -10,14 +10,14 @@ async function create(product: {
   stockId: number;
 }): Promise<Product | undefined> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products`, {
       body: JSON.stringify(product),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -29,14 +29,14 @@ async function create(product: {
 
 async function update(newProduct: Product): Promise<Product | undefined> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products`, {
       body: JSON.stringify(newProduct),
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -48,12 +48,12 @@ async function update(newProduct: Product): Promise<Product | undefined> {
 
 async function all() {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -67,12 +67,12 @@ async function all() {
 
 async function getById(id: string): Promise<Product | undefined> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products/${id}`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -86,12 +86,12 @@ async function getById(id: string): Promise<Product | undefined> {
 
 async function getByStockId(id: string): Promise<Product[]> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products/stock/${id}`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 
@@ -106,12 +106,12 @@ async function getByStockId(id: string): Promise<Product[]> {
 
 async function getByCategoryId(id: string): Promise<Product[]> {
   try {
-    const JWT = localStorage.getItem("jwt")!;
+    // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products/category/${id}`, {
       method: "GET",
       headers: {
-        authorization: JWT,
+        // authorization: JWT,
       },
     });
 

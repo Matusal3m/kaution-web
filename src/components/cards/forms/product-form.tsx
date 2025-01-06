@@ -66,8 +66,9 @@ function renderSelectGroups(selectItemsData: selectItemsData) {
 function parseSelectItemsData(categoriesData: CategoryDashboardResponse) {
   const selectItemsData: selectItemsData = {};
 
-  categoriesData.forEach(({ stock, category }) => {
+  categoriesData.forEach(({ stock, id, name }) => {
     const key = stock.name;
+    const category = { id, name };
     const currentObj = selectItemsData[key];
 
     if (!currentObj) {

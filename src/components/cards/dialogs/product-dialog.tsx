@@ -1,13 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import {
+  DialogHeader,
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogTitle,
-} from "@radix-ui/react-dialog";
+} from "@/components/ui/dialog";
 import { ProductForm } from "../forms/product-form";
 import { useState } from "react";
 

@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -29,8 +28,8 @@ export function StockDialog() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Criar estoque</DialogTitle>
-          <StockForm onSucess={closeDialog} />
         </DialogHeader>
+        <StockForm onSucess={closeDialog} />
       </DialogContent>
     </Dialog>
   );

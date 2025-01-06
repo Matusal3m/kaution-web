@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
+  Form,
   FormField,
   FormItem,
   FormLabel,
@@ -13,12 +14,12 @@ import {
   SelectValue,
   SelectContent,
   SelectItem,
-  SelectGroup,
   SelectLabel,
-} from "@radix-ui/react-select";
+  SelectGroup,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 
@@ -36,21 +37,23 @@ type selectItemsData = Record<
   }
 >;
 
-function generateSelectGroups(selectItemsData: selectItemsData) {
+function renderSelectGroups(selectItemsData: selectItemsData) {
   const selectGroups = [];
   for (const key in selectItemsData) {
     const { categories, stock } = selectItemsData[key];
 
     const selectGroup = (
-      <SelectGroup>
-        <SelectLabel>{stock.name}</SelectLabel>
-        {categories.map((category) => (
-          <SelectItem
-            value={`{"categoryId": "${category.id}"}, "stockId": "${stock.id}"`}
-          >
-            {category.name}
-          </SelectItem>
-        ))}
+      <SelectGroup key={key}>
+        <SelectLabel className="text-xl">{stock.name}</SelectLabel>
+        {categories.length !== 0 &&
+          categories.map((category) => (
+            <SelectItem
+              key={category.id}
+              value={`{"categoryId": "${category.id}"}, "stockId": "${stock.id}"`}
+            >
+              {category.name}
+            </SelectItem>
+          ))}
       </SelectGroup>
     );
 
@@ -89,11 +92,24 @@ const formSchema = z.object({
     .max(50, { message: "O nome não deve ultrapassar 50 caractéries" }),
   description: z
     .string()
-    .max(50, { message: "A descrição não deve ultrapassar 50 caractéries" })
-    .default(""),
-  quantity: z.number().default(0),
+    .max(50, { message: "A descrição não deve ultrapassar 50 caractéries" }),
+  quantity: z.number(),
   ids: z.string(),
 });
+
+async function onSubmit({
+  name,
+  description,
+  quantity,
+  ids,
+}: z.infer<typeof formSchema>) {
+  const { stockId, categoryId } = JSON.parse(ids) as {
+    stockId: number;
+    categoryId: number;
+  };
+
+  await create({ name, description, quantity, categoryId, stockId });
+}
 
 interface ProductFormProps {
   onSucess: () => void;
@@ -106,7 +122,7 @@ export function ProductForm({ onSucess }: ProductFormProps) {
     const fetchStocks = async () => {
       const categoriesData = await getCategories();
       const selectItemsData = parseSelectItemsData(categoriesData);
-      const selectGroups = generateSelectGroups(selectItemsData);
+      const selectGroups = renderSelectGroups(selectItemsData);
 
       setSelectGroups(selectGroups);
     };
@@ -115,25 +131,19 @@ export function ProductForm({ onSucess }: ProductFormProps) {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      quantity: 0,
+      ids: "",
+    },
   });
 
-  const onSubmit = async ({
-    name,
-    description,
-    quantity,
-    ids,
-  }: z.infer<typeof formSchema>) => {
-    const { stockId, categoryId } = JSON.parse(ids) as {
-      stockId: number;
-      categoryId: number;
-    };
-
-    await create({ name, description, quantity, categoryId, stockId });
-  };
-
-  if (form.formState.isSubmitSuccessful) {
-    onSucess();
-  }
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      onSucess();
+    }
+  }, [onSucess, form.formState.isSubmitSuccessful]);
 
   return (
     <Form {...form}>

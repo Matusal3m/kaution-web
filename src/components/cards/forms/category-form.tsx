@@ -1,4 +1,5 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import {
   Form,
   FormControl,
@@ -7,59 +8,72 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@radix-ui/react-select";
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { create, all } from "@/shared/services/api/category-service";
-import { Stock } from "@/shared/types";
+import { create } from "@/shared/services/api/category-service";
+import { all } from "@/shared/services/api/stock-service";
 
 const formSchema = z.object({
   name: z
     .string()
     .min(2, { message: "O nome deve ter no mínimo duas caractéries" })
     .max(50, { message: "O nome não deve ultrapassar 50 caractéries" }),
-  stockId: z.number({ required_error: "É preciso escolher um estoque" }),
+  stockId: z.string({ required_error: "É preciso escolher um estoque" }),
 });
+
+async function onSubmit({ name, stockId }: z.infer<typeof formSchema>) {
+  await create({ name, stockId: parseInt(stockId) });
+}
 
 interface CategoryFormProps {
   onSucess: () => void;
 }
 
 export function CategoryForm({ onSucess }: CategoryFormProps) {
-  const [stocks, setStocks] = useState<Stock[]>([]);
+  const [selectItems, setSelectItems] = useState<JSX.Element[]>([]);
 
   useEffect(() => {
-    const fetchStocks = async () => {
-      setStocks(await all());
+    const renderSelectItem = async () => {
+      const stocks = await all();
+
+      const selectItems = stocks.map((stock) => (
+        <SelectItem value={String(stock.id)} key={stock.id}>
+          {stock.name}
+        </SelectItem>
+      ));
+
+      setSelectItems(selectItems);
     };
-    fetchStocks();
+
+    renderSelectItem();
   }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      stockId: "",
     },
   });
 
-  async function onSubmit({ name, stockId }: z.infer<typeof formSchema>) {
-    await create({ name, stockId });
-  }
-
-  if (form.formState.isSubmitSuccessful) {
-    onSucess();
-  }
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      onSucess();
+    }
+  }, [onSucess, form.formState.isSubmitSuccessful]);
 
   return (
     <Form {...form}>
@@ -79,24 +93,18 @@ export function CategoryForm({ onSucess }: CategoryFormProps) {
           )}
         />
         <FormField
-          control={form.control}
           name="stockId"
+          control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Estoque</FormLabel>
-              <Select onValueChange={field.onChange}>
+              <FormLabel>Categoria do produto</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Escolha um estoque para a categoria" />
+                    <SelectValue placeholder="Selecione o estoque para a categoria" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
-                  {stocks.map((stock) => (
-                    <SelectItem key={stock.id} value={stock.id}>
-                      {stock.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <SelectContent>{selectItems}</SelectContent>
               </Select>
               <FormMessage />
             </FormItem>

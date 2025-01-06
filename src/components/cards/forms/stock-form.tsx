@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z
@@ -21,6 +22,10 @@ const formSchema = z.object({
     .min(2, { message: "O nome deve ter no mínimo duas caractéries" })
     .max(50, { message: "O nome não deve ultrapassar 50 caractéries" }),
 });
+
+async function onSubmit({ name }: z.infer<typeof formSchema>) {
+  await create({ name });
+}
 
 interface StockFormProps {
   onSucess: () => void;
@@ -34,13 +39,11 @@ export function StockForm({ onSucess }: StockFormProps) {
     },
   });
 
-  async function onSubmit({ name }: z.infer<typeof formSchema>) {
-    await create({ name });
-  }
-
-  if (form.formState.isSubmitSuccessful) {
-    onSucess();
-  }
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      onSucess();
+    }
+  }, [onSucess, form.formState.isSubmitSuccessful]);
 
   return (
     <Form {...form}>

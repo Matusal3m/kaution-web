@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { StockDialog } from "./dialogs/stock-dialog";
+import { CategoryDialog } from "./dialogs/category-dialog";
 
 interface CardProps {
   title: string;
@@ -27,6 +28,7 @@ const cards: CardProps[] = [
     title: "Categoria",
     content: "Crie uma para agrupar vários produtos",
     key: "category-card",
+    dialog: <CategoryDialog />,
   },
   {
     title: "Produto",

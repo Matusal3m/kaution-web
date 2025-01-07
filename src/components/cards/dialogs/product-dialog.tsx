@@ -24,7 +24,7 @@ export function ProductDialog() {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button>Criar Estoque</Button>
+        <Button>Criar Produto</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

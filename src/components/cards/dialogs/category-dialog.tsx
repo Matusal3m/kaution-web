@@ -25,11 +25,11 @@ export function CategoryDialog() {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button>Criar Estoque</Button>
+        <Button>Criar Categoria</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Criar estoque</DialogTitle>
+          <DialogTitle>Criar Categoria</DialogTitle>
         </DialogHeader>
         <CategoryForm onSucess={closeDialog} />
       </DialogContent>

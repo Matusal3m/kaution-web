@@ -35,6 +35,7 @@ const formSchema = z.object({
 });
 
 async function onSubmit({ name, stockId }: z.infer<typeof formSchema>) {
+  console.log({ name, stockId: parseInt(stockId) });
   await create({ name, stockId: parseInt(stockId) });
 }
 

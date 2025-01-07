@@ -48,6 +48,12 @@ const translateHeaderToPortuguese = (header: string) => {
       return "Descrição";
     case "actions":
       return "Ações";
+    case "stock":
+      return "Estoque";
+    case "category":
+      return "Categoria";
+    default:
+      return header;
   }
 };
 
@@ -128,7 +134,7 @@ export function DataTable<TData, TValue>({
                       ? null
                       : flexRender(
                           header.column.columnDef.header,
-                          header.getContext()
+                          header.getContext(),
                         )}
                   </TableHead>
                 );

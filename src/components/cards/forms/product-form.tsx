@@ -49,7 +49,7 @@ function renderSelectGroups(selectItemsData: selectItemsData) {
           categories.map((category) => (
             <SelectItem
               key={category.id}
-              value={`{"categoryId": "${category.id}"}, "stockId": "${stock.id}"`}
+              value={`{"categoryId": "${category.id}", "stockId": "${stock.id}"}`}
             >
               {category.name}
             </SelectItem>
@@ -83,6 +83,7 @@ function parseSelectItemsData(categoriesData: CategoryDashboardResponse) {
     selectItemsData[key] = { stock, categories: newCategories };
   });
 
+  console.log({ selectItemsData });
   return selectItemsData;
 }
 
@@ -94,7 +95,9 @@ const formSchema = z.object({
   description: z
     .string()
     .max(50, { message: "A descrição não deve ultrapassar 50 caractéries" }),
-  quantity: z.number(),
+  quantity: z.string().refine((val) => !Number.isNaN(parseInt(val, 10)), {
+    message: "O valor precisa ser um número",
+  }),
   ids: z.string(),
 });
 
@@ -109,7 +112,13 @@ async function onSubmit({
     categoryId: number;
   };
 
-  await create({ name, description, quantity, categoryId, stockId });
+  await create({
+    name,
+    description,
+    quantity: parseInt(quantity),
+    categoryId,
+    stockId,
+  });
 }
 
 interface ProductFormProps {
@@ -135,7 +144,7 @@ export function ProductForm({ onSucess }: ProductFormProps) {
     defaultValues: {
       name: "",
       description: "",
-      quantity: 0,
+      quantity: "0",
       ids: "",
     },
   });
@@ -149,6 +158,24 @@ export function ProductForm({ onSucess }: ProductFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="ids"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Estoque</FormLabel>
+              <Select onValueChange={field.onChange}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Escolha o local do produto" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>{selectGroups}</SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           name="name"
           control={form.control}
@@ -184,24 +211,6 @@ export function ProductForm({ onSucess }: ProductFormProps) {
             <FormItem>
               <FormLabel>Quantidade inicial de produtos</FormLabel>
               <Input type="number" {...field} />
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="ids"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Estoque</FormLabel>
-              <Select onValueChange={field.onChange}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Escolha o local do produto" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>{selectGroups}</SelectContent>
-              </Select>
               <FormMessage />
             </FormItem>
           )}

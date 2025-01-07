@@ -1,6 +1,5 @@
 "use client";
 
-import { Stock } from "@/shared/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { MoreHorizontal, ArrowUpDown } from "lucide-react";
@@ -50,6 +49,10 @@ export const stockColumns: ColumnDef<stockCollumDef>[] = [
         </Button>
       );
     },
+    cell: ({ getValue }) => {
+      const value = getValue() as number | null;
+      return <div>{value ?? 0}</div>;
+    },
   },
   {
     accessorKey: "productsCount",
@@ -63,6 +66,10 @@ export const stockColumns: ColumnDef<stockCollumDef>[] = [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ getValue }) => {
+      const value = getValue() as number | null;
+      return <div>{value ?? 0}</div>;
     },
   },
   {

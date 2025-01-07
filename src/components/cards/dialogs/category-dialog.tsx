@@ -11,12 +11,15 @@ import {
 import { Button } from "../../ui/button";
 import { useState } from "react";
 import { CategoryForm } from "../forms/category-form";
+import { useRouter } from "next/navigation";
 
 export function CategoryDialog() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const closeDialog = () => {
     setOpen(false);
+    router.refresh();
   };
 
   return (

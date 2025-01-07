@@ -10,12 +10,15 @@ import {
 } from "@/components/ui/dialog";
 import { ProductForm } from "../forms/product-form";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function ProductDialog() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const closeDialog = () => {
     setOpen(false);
+    router.refresh();
   };
 
   return (

@@ -12,12 +12,15 @@ import { Button } from "../../ui/button";
 import { useState } from "react";
 
 import { StockForm } from "../forms/stock-form";
+import { useRouter } from "next/navigation";
 
 export function StockDialog() {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const closeDialog = () => {
     setOpen(false);
+    router.refresh();
   };
 
   return (

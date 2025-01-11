@@ -1,16 +1,27 @@
-import { Category } from "../../types";
-
 const baseUrl = process.env.BASE_API_URL;
 
-async function create(category: {
+export type UserCategory = {
+  id: number;
   name: string;
   stockId: number;
-}): Promise<Category | undefined> {
+  stock: string;
+  productsCount: number;
+};
+
+export type Category = {
+  id: number;
+  name: string;
+  stockId: number;
+};
+
+async function create(
+  newCategory: Omit<Category, "id">
+): Promise<Category | undefined> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories`, {
-      body: JSON.stringify(category),
+      body: JSON.stringify(newCategory),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,12 +35,14 @@ async function create(category: {
   }
 }
 
-async function update(newCategory: Category): Promise<Category | undefined> {
+async function update(
+  updatedCategory: Category
+): Promise<Category | undefined> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/categories`, {
-      body: JSON.stringify(newCategory),
+      body: JSON.stringify(updatedCategory),
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +56,7 @@ async function update(newCategory: Category): Promise<Category | undefined> {
   }
 }
 
-async function all(): Promise<Category[]> {
+async function all(): Promise<UserCategory[]> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
@@ -54,7 +67,7 @@ async function all(): Promise<Category[]> {
       },
     });
 
-    const json = (await response.json()) as Category[];
+    const json = await response.json();
 
     return json;
   } catch (error) {
@@ -102,4 +115,23 @@ async function getByStockId(id: string): Promise<Category[]> {
   }
 }
 
-export { create, update, all, getById, getByStockId };
+async function quantity(): Promise<number | undefined> {
+  try {
+    // const JWT = localStorage.getItem("jwt")!;
+
+    const response = await fetch(`${baseUrl}/categories/quantity`, {
+      method: "GET",
+      headers: {
+        // authorization: JWT,
+      },
+    });
+
+    const { quantity } = await response.json();
+
+    return quantity;
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
+export default { create, update, all, getById, getByStockId, quantity };

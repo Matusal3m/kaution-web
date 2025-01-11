@@ -13,15 +13,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React from "react";
+import { UserStock } from "@/services/api/stock-service";
 
-type stockCollumDef = {
-  id: number;
-  name: string;
-  productsCount: number;
-  categoriesCount: number;
-};
-
-export const stockColumns: ColumnDef<stockCollumDef>[] = [
+export const stockColumns: ColumnDef<UserStock>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {

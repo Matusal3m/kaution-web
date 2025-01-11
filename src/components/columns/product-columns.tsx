@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React, { useState } from "react";
+import { UserProduct } from "@/services/api/product-service";
 
 const validateValueChange = (
   event: React.ChangeEvent<HTMLInputElement>,
@@ -54,14 +55,7 @@ const handeCellBlur = async (
   console.log("Requisão ao banco...");
 };
 
-export const productColumns: ColumnDef<{
-  id: number;
-  name: string;
-  description: string;
-  quantity: number;
-  category: string;
-  stock: string;
-}>[] = [
+export const productColumns: ColumnDef<UserProduct>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {

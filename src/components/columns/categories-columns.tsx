@@ -13,16 +13,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import React from "react";
+import { UserCategory } from "@/services/api/category-service";
 
-export const categoryColumns: ColumnDef<{
-  id: number;
-  name: string;
-  stock: {
-    id: number;
-    name: string;
-  };
-  productsCount: number;
-}>[] = [
+export const categoryColumns: ColumnDef<UserCategory>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -49,10 +42,6 @@ export const categoryColumns: ColumnDef<{
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
-    },
-    cell: ({ cell }) => {
-      const { name } = cell.getValue() as { id: number; name: string };
-      return <div>{name}</div>;
     },
   },
   {

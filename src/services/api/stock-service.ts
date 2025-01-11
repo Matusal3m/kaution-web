@@ -1,13 +1,23 @@
-import { Stock } from "@/shared/types";
-
 const baseUrl = process.env.BASE_API_URL;
 
-async function create({ name }: { name: string }): Promise<Stock | undefined> {
+export type UserStock = {
+  id: number;
+  name: string;
+  productsCount: number;
+  categoriesCount: number;
+};
+
+export type Stock = {
+  id: number;
+  name: string;
+};
+
+async function create(newStock: Omit<Stock, "id">): Promise<Stock | undefined> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/stocks`, {
-      body: JSON.stringify({ name }),
+      body: JSON.stringify(newStock),
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,12 +31,12 @@ async function create({ name }: { name: string }): Promise<Stock | undefined> {
   }
 }
 
-async function update(newStock: Promise<Stock | undefined>) {
+async function update(updatedStock: Promise<Stock | undefined>) {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/stocks`, {
-      body: JSON.stringify(newStock),
+      body: JSON.stringify(updatedStock),
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +50,7 @@ async function update(newStock: Promise<Stock | undefined>) {
   }
 }
 
-async function all(): Promise<Stock[]> {
+async function all(): Promise<UserStock[]> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
@@ -79,4 +89,23 @@ async function getById(id: string): Promise<Stock | undefined> {
   }
 }
 
-export { create, update, all, getById };
+async function quantity(): Promise<number | undefined> {
+  try {
+    // const JWT = localStorage.getItem("jwt")!;
+
+    const response = await fetch(`${baseUrl}/stocks/quantity`, {
+      method: "GET",
+      headers: {
+        // authorization: JWT,
+      },
+    });
+
+    const { quantity } = await response.json();
+
+    return quantity;
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
+export default { create, update, all, getById, quantity };

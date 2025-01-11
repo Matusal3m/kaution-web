@@ -23,8 +23,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { create } from "@/shared/services/api/category-service";
-import { all } from "@/shared/services/api/stock-service";
+import categoryService from "@/services/api/category-service";
+import stockService from "@/services/api/stock-service";
 
 const formSchema = z.object({
   name: z
@@ -35,8 +35,7 @@ const formSchema = z.object({
 });
 
 async function onSubmit({ name, stockId }: z.infer<typeof formSchema>) {
-  console.log({ name, stockId: parseInt(stockId) });
-  await create({ name, stockId: parseInt(stockId) });
+  await categoryService.create({ name, stockId: parseInt(stockId) });
 }
 
 interface CategoryFormProps {
@@ -48,7 +47,7 @@ export function CategoryForm({ onSucess }: CategoryFormProps) {
 
   useEffect(() => {
     const renderSelectItem = async () => {
-      const stocks = await all();
+      const stocks = await stockService.all();
 
       const selectItems = stocks.map((stock) => (
         <SelectItem value={String(stock.id)} key={stock.id}>

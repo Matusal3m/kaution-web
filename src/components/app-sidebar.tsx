@@ -20,17 +20,17 @@ const items = [
   },
   {
     title: "Estoque",
-    url: "/dashboard/stocks",
+    url: "/stocks",
     icon: Boxes,
   },
   {
     title: "Categorias",
-    url: "/dashboard/categories",
+    url: "/categories",
     icon: Box,
   },
   {
     title: "Produtos",
-    url: "/dashboard/products",
+    url: "/products",
     icon: Shapes,
   },
   {

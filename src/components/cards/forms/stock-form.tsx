@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { create } from "@/shared/services/api/stock-service";
+import stockService from "@/services/api/stock-service";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +24,7 @@ const formSchema = z.object({
 });
 
 async function onSubmit({ name }: z.infer<typeof formSchema>) {
-  await create({ name });
+  await stockService.create({ name });
 }
 
 interface StockFormProps {

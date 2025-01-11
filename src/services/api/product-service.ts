@@ -1,14 +1,27 @@
-import { Product } from "../../types";
-
 const baseUrl = process.env.BASE_API_URL;
 
-async function create(product: {
+export type UserProduct = {
+  id: number;
   name: string;
   quantity: number;
   description: string;
-  categoryId: number;
+  category: string;
+  stock: string;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  userId: number;
   stockId: number;
-}): Promise<Product | undefined> {
+  description: string | null;
+  quantity: number;
+  categoryId: number;
+};
+
+async function create(
+  product: Omit<Product, "id" | "userId">
+): Promise<Product | undefined> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
@@ -27,12 +40,14 @@ async function create(product: {
   }
 }
 
-async function update(newProduct: Product): Promise<Product | undefined> {
+async function update(
+  updatedProduct: Partial<Product>
+): Promise<Product | undefined> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
     const response = await fetch(`${baseUrl}/products`, {
-      body: JSON.stringify(newProduct),
+      body: JSON.stringify(updatedProduct),
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +61,7 @@ async function update(newProduct: Product): Promise<Product | undefined> {
   }
 }
 
-async function all() {
+async function all(): Promise<UserProduct[]> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
@@ -62,10 +77,11 @@ async function all() {
     return json;
   } catch (error) {
     console.log({ error });
+    return [];
   }
 }
 
-async function getById(id: string): Promise<Product | undefined> {
+async function getById(id: number): Promise<Product | undefined> {
   try {
     // const JWT = localStorage.getItem("jwt")!;
 
@@ -124,4 +140,31 @@ async function getByCategoryId(id: string): Promise<Product[]> {
   }
 }
 
-export { create, update, all, getById, getByStockId, getByCategoryId };
+async function quantity(): Promise<number | undefined> {
+  try {
+    // const JWT = localStorage.getItem("jwt")!;
+
+    const response = await fetch(`${baseUrl}/products/quantity`, {
+      method: "GET",
+      headers: {
+        // authorization: JWT,
+      },
+    });
+
+    const { quantity } = await response.json();
+
+    return quantity;
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
+export default {
+  create,
+  update,
+  all,
+  getById,
+  getByStockId,
+  getByCategoryId,
+  quantity,
+};

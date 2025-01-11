@@ -23,11 +23,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 
-import {
-  CategoryDashboardResponse,
-  getCategories,
-} from "@/shared/services/api/dashboard-service";
-import { create } from "@/shared/services/api/product-service";
+import productService from "@/services/api/product-service";
+import categoryService, { UserCategory } from "@/services/api/category-service";
 
 type selectItemsData = Record<
   string,
@@ -63,16 +60,20 @@ function renderSelectGroups(selectItemsData: selectItemsData) {
   return selectGroups;
 }
 
-function parseSelectItemsData(categoriesData: CategoryDashboardResponse) {
+function parseSelectItemsData(categoriesData: UserCategory[]) {
   const selectItemsData: selectItemsData = {};
 
-  categoriesData.forEach(({ stock, id, name }) => {
-    const key = stock.name;
+  categoriesData.forEach(({ stock: stockName, stockId, id, name }) => {
+    const key = stockName;
     const category = { id, name };
+    const stock = { id: stockId, name: stockName };
     const currentObj = selectItemsData[key];
 
     if (!currentObj) {
-      selectItemsData[key] = { stock, categories: [category] };
+      selectItemsData[key] = {
+        stock,
+        categories: [category],
+      };
       return;
     }
 
@@ -83,7 +84,6 @@ function parseSelectItemsData(categoriesData: CategoryDashboardResponse) {
     selectItemsData[key] = { stock, categories: newCategories };
   });
 
-  console.log({ selectItemsData });
   return selectItemsData;
 }
 
@@ -112,7 +112,7 @@ async function onSubmit({
     categoryId: number;
   };
 
-  await create({
+  await productService.create({
     name,
     description,
     quantity: parseInt(quantity),
@@ -130,7 +130,7 @@ export function ProductForm({ onSucess }: ProductFormProps) {
 
   useEffect(() => {
     const fetchStocks = async () => {
-      const categoriesData = await getCategories();
+      const categoriesData = await categoryService.all();
       const selectItemsData = parseSelectItemsData(categoriesData);
       const selectGroups = renderSelectGroups(selectItemsData);
 
